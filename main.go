@@ -21,6 +21,7 @@ func main() {
 	fmt.Println("CreateTime: " + newSastResult.CreateTime)
 
 	// sastResult converted back to json
+	fmt.Println("")
 	fmt.Println("Sast Result back to Json: ")
 	fmt.Println(newSastResult.toJSON())
 }

@@ -1,4 +1,5 @@
 package main
+package sastQuery
 
 import (
 	"encoding/json"
@@ -8,6 +9,7 @@ type sastResult struct {
 	Version string
 	ScanId string
 	CreateTime string
+	Queries []sastQuery //`json:"first_name"`
 }
 
 func newSastResult(jsonSastResult string) sastResult {
