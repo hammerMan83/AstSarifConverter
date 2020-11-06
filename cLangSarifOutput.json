@@ -1,0 +1,171 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "artifacts": [
+        {
+          "length": 637,
+          "location": {
+            "uri": "file:///clang_tests/Example1.cpp"
+          },
+          "mimeType": "text/plain",
+          "roles": [
+            "resultFile"
+          ]
+        }
+      ],
+      "columnKind": "unicodeCodePoints",
+      "results": [
+        {
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "importance": "essential",
+                      "location": {
+                        "message": {
+                          "text": "'x' initialized to 0"
+                        },
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "index": 0,
+                            "uri": "file:///clang_tests/Example1.cpp"
+                          },
+                          "region": {
+                            "endColumn": 8,
+                            "endLine": 19,
+                            "startColumn": 3,
+                            "startLine": 19
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "importance": "essential",
+                      "location": {
+                        "message": {
+                          "text": "Division by zero"
+                        },
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "index": 0,
+                            "uri": "file:///clang_tests/Example1.cpp"
+                          },
+                          "region": {
+                            "endColumn": 12,
+                            "startColumn": 12,
+                            "startLine": 21
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 0,
+                  "uri": "file:///clang_tests/Example1.cpp"
+                },
+                "region": {
+                  "endColumn": 12,
+                  "startColumn": 12,
+                  "startLine": 21
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Division by zero"
+          },
+          "ruleId": "core.DivideZero",
+          "ruleIndex": 0
+        },
+        {
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "importance": "essential",
+                      "location": {
+                        "message": {
+                          "text": "Value stored to 'y' is never read"
+                        },
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "index": 0,
+                            "uri": "file:///clang_tests/Example1.cpp"
+                          },
+                          "region": {
+                            "endColumn": 3,
+                            "startColumn": 3,
+                            "startLine": 22
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 0,
+                  "uri": "file:///clang_tests/Example1.cpp"
+                },
+                "region": {
+                  "endColumn": 3,
+                  "startColumn": 3,
+                  "startLine": 22
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Value stored to 'y' is never read"
+          },
+          "ruleId": "deadcode.DeadStores",
+          "ruleIndex": 1
+        }
+      ],
+      "tool": {
+        "driver": {
+          "fullName": "clang static analyzer",
+          "language": "en-US",
+          "name": "clang",
+          "rules": [
+            {
+              "fullDescription": {
+                "text": "Check for division by zero"
+              },
+              "helpUri": "https://clang-analyzer.llvm.org/available_checks.html#core.DivideZero",
+              "id": "core.DivideZero",
+              "name": "core.DivideZero"
+            },
+            {
+              "fullDescription": {
+                "text": "Check for values stored to variables that are never read afterwards"
+              },
+              "helpUri": "https://clang-analyzer.llvm.org/available_checks.html#deadcode.DeadStores",
+              "id": "deadcode.DeadStores",
+              "name": "deadcode.DeadStores"
+            }
+          ],
+          "version": "clang version 10.0.0 "
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}
