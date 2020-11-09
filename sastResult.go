@@ -57,5 +57,4 @@ type SastResultNode struct {
 	Name string
 	NodeId uint64
 	DomType string
-	//Nodes
 }
