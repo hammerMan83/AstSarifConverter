@@ -1,6 +1,7 @@
 package main
 
  import (
+	"encoding/json"
  	"fmt"
  )
 
@@ -13,6 +14,10 @@ func main() {
 
 	s := buildSastResultMap(m)
 	fmt.Println(s)
+
+	jsonString, _ := json.Marshal(s)
+	fmt.Println(string(jsonString))
+	
 
 	//convertCLangSarifToSastResult(j)
 
