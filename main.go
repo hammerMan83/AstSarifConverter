@@ -7,9 +7,12 @@ package main
 func main() {
 
 	j := readJSONFromFile("cLangSarifOutput.json")
-	m := cLangSarifToMap(j) 
+	m := jsonToMap(j) 
 	//print the map
-    fmt.Println(m)
+    //fmt.Println(m)
+
+	s := buildSastResultMap(m)
+	fmt.Println(s)
 
 	//convertCLangSarifToSastResult(j)
 

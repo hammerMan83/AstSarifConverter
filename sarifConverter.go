@@ -19,7 +19,7 @@ func readJSONFromFile(fileName string) string {
 }
 
 //https://stackoverflow.com/questions/32708717/go-when-will-json-unmarshal-to-struct-return-error
-func cLangSarifToMap(j string) map[string]interface{} { //SastResult {
+func jsonToMap(j string) map[string]interface{} { //SastResult {
 
 	//Marshal the json to a map
 	var i interface{}
@@ -39,10 +39,12 @@ func cLangSarifToMap(j string) map[string]interface{} { //SastResult {
 	//os.Stdout.Write(result)
 }
 
-func buildSastResultMap() {
+func buildSastResultMap(m map[string]interface{}) map[string]interface{} {	
+	// Create a new Cx Sast Result Map
+	r := make(map[string]interface{})
+	r["Version"] = "1.0.0"
 
-
-
+	return r
 }
 
 
