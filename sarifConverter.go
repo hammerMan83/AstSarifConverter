@@ -1,10 +1,12 @@
 package main
 
 import (
-	//"os"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"math/rand"
+	"strings"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -41,14 +43,74 @@ func jsonToMap(j string) map[string]interface{} { //SastResult {
 	//os.Stdout.Write(result)
 }
 
-func buildSastResultMap(m map[string]interface{}) map[string]interface{} {
-	// Create a new Cx Sast Result Map
+func convertCLangSarifJSONToStruct(clangJSONSarifResult string) []Result { //CLangResult {
+	var c CLangSarif
+	json.Unmarshal([]byte(clangJSONSarifResult), &c)
 
-	// TODO: Need to build the json in another way. Map does not maintain order,
-	// so it's not suitable here.
+	var sastResults []Result
 
-	r := make(map[string]interface{})
-	r["Version"] = "1.0.0"
-	r["ScanId"] = uuid.New()
-	return r
+	for _, run := range c.Runs {
+		rules := run.Tool.Driver.Rules
+		fmt.Println("Results")
+		for j, result := range run.Results {
+			var sastResult Result
+			sastResult.ScanID = uuid.New().String()
+			sastResult.ProjectID = "1" // TODO: Make sure we use project id "1"
+			sastResult.IsIncremental = false
+			sastResult.CreatedAt = time.Now()
+			sastResult.QueryID = 1               // TODO: Make sure we use query id 1
+			sastResult.QueryVersion = 1          // TODO: Make sure we use QueryVersion 1
+			sastResult.QueryName = rules[j].Name // Rule is equivalent to a query.
+			sastResult.Nodes = createNodes(result.Locations, result)
+
+			if strings.HasSuffix(sastResult.Nodes[0].FileName, "cpp") {
+				sastResult.LanguageName = "c++"
+			}
+
+			if strings.HasSuffix(sastResult.Nodes[0].FileName, "py") {
+				sastResult.LanguageName = "python"
+			}
+
+			sastResult.PackageName = "My Package"
+			sastResult.GroupName = "My Group"
+			sastResult.Severity = Result_Severity(rand.Intn(4))
+			sastResult.CweID = int64(rand.Intn(100000000))
+			sastResult.PathID = int64(j)
+			sastResult.UniqueID = int64(j)
+			sastResult.SimilarityID = int64(rand.Intn(9223372036854775807))
+			sastResult.ConfidenceLevel = 100
+			sastResult.Classification = Result_Classification(rand.Intn(7))
+			sastResult.Status = Result_Status(rand.Intn(3))
+
+			sastResults = append(sastResults, sastResult)
+		}
+	}
+
+	return sastResults	
 }
+
+func createNodes(locations []ResultLocation, clResult CLResult) []*Result_Node {
+
+	var nodes []*Result_Node
+
+	for i, location := range locations {
+		var node Result_Node
+		node.Name = clResult.Message.Text
+		node.FileName = location.PhysicalLocation.ArtifactLocation.URI
+		node.FullName = location.PhysicalLocation.ArtifactLocation.URI
+		node.Line = location.PhysicalLocation.Region.StartLine
+		node.Column = location.PhysicalLocation.Region.StartColumn
+		node.NodeID = int32(i)
+
+		fmt.Println("****Node: ", node)
+		fmt.Println("\n")
+
+		nodes = append(nodes, &node)
+	}
+
+	return nodes
+}
+
+// func buildSastResultMap(c string) { //map[string]interface{} {
+
+// }

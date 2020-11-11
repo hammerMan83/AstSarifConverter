@@ -1,22 +1,26 @@
 package main
 
  import (
-	"encoding/json"
+	//"encoding/json"
  	"fmt"
  )
 
 func main() {
 
 	j := readJSONFromFile("cLangSarifOutput.json")
-	m := jsonToMap(j) 
+	//m := jsonToMap(j) 
 	//print the map
     //fmt.Println(m)
 
-	s := buildSastResultMap(m)
-	fmt.Println(s)
+	sastResult := convertCLangSarifJSONToStruct(j)
+	
+	fmt.Println(sastResult)
 
-	jsonString, _ := json.Marshal(s)
-	fmt.Println(string(jsonString))
+	//buildSastResultMap(m)
+	//fmt.Println(s)
+
+	//jsonString, _ := json.Marshal(s)
+	//fmt.Println(string(jsonString))
 	
 
 	//convertCLangSarifToSastResult(j)
